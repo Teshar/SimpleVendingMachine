@@ -1,0 +1,82 @@
+<html ng-app="VendingMachine" ng-init="coinTot=0.00;prodPrice=0.00">
+   <head >
+      <title>Vending Machine</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Include Bootstrap CSS -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <!-- Include main CSS -->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!-- Include jQuery library -->
+      <script src="js/jquery.min.js"></script>
+      <!-- Include AngularJS library -->
+      <script src="lib/angular.min.js"></script>
+      <!-- Include Bootstrap Javascript -->
+      <script src="js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="container wrapper" ng-controller="DbController">
+   <h1 class="text-center">Vending Machine</h1>
+   
+   <hr/>
+     <h2 class="text-center">Insert Coins</h1>
+     
+  <table class="table table-condensed" >
+ <tr>
+ <td ng-repeat="detailC in Coindetails"><button ng-click="clickCoin(detailC.coin_value)" class="btn btn-sm btn-success badge"    style="width:100%;text-align:center">R{{detailC.coin_value}}</button>
+
+ </td>
+ </tr>
+   </table>
+      <hr/>
+
+   <h4 class="text-center"><span id="currency-custom">{{coinTot | currency:"R"}} inserted</span></h4>
+
+<table class="table table-bordered" width="100%" border="1">
+  <tr>
+    <td>   <h1 id="itemTxt" class="text-center">Choose an Item</h1> </td>
+    <td><button disabled id = "purchaseBtn" class="btn btn-lg btn-group btn-block">Purchase</button></td>
+    
+  </tr>
+  <tr>
+    <td><h1 id="itemPrice" class="text-center"></h1></td>
+    <td><h1 id="message" class="text-center"></h1></td>
+  </tr>
+</table>
+   
+   
+
+          
+<table  class="table">
+            <tr ng-repeat="detail in details">
+                  <td>
+                   <button ng-disabled="detail.product_qty<1" ng-click="clickProd(detail)" class="btn btn-lg btn-info" style="width:100%;margin-bottom:4px;white-space: normal;text-align:center"> <h4 class="hidden">{{detail.product_id}}</h4>  <h3>{{detail.product_name}}</h3> <h3 class="text-success">R{{detail.product_price}}</h3><h3 class="text-success">{{detail.product_qty}} remaining</h3></button>
+                  </td>
+                 
+               </tr>
+            </table>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+      <!-- Include controller -->
+      <script src="js/angular-script.js"></script>
+   </body>
+</html>
