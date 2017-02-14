@@ -1,17 +1,11 @@
-<?php
+<?php 
 // Including database connections
-require_once "database.php";
-// mysqli query to fetch all data from database
-$query = "SELECT * from coin ORDER BY coin_value ASC";
-$result = mysqli_query($con, $query);
-$arr = array();
-if(mysqli_num_rows($result) != 0) 
-{
-	while($row = mysqli_fetch_assoc($result)) 
-	{
-		$arr[] = $row;
-	}
-}
-// Return json array containing data from the databasecon
-echo $json_info = json_encode($arr);
+require_once 'database.php';
+// Fetching the updated data & storin in new variables
+$data = json_decode(file_get_contents("php://input")); 
+// Escaping special characters from updated data
+$id = mysqli_real_escape_string($con, $data->purchase_id);
+$query = "UPDATE products SET product_qty = product_qty -1 WHERE product_id = $id";
+mysqli_query($con, $query);
+echo true;
 ?>

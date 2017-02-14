@@ -1,8 +1,14 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway);
+.columns {
+  columns: 3;
+}
+
+
 .wrapper{
 min-height: 960px;
 }
-form#empForm, form#editForm {
+form#empForm, form#editForm 
+{
 padding: 0 35px 15px;
 }
 label.gender {
@@ -19,3 +25,4 @@ table tr th{
     min-width: 340px;
 }   
 }
+

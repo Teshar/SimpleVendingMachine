@@ -13,6 +13,25 @@ VendingMachine.controller("DbController",['$scope','$http', function($scope,$htt
 		//$("#mainTable").animate(100);
 	}
 
+		$scope.refreshAll = function()
+	{
+		getInfo();
+		getCoinInfo();
+		$scope.coinTot=0;
+		$scope.prodPrice=0;
+		$scope.selectedProdid=0;
+		$scope.line=0;
+ 		$('#itemTxt').text("Choose an Item"); 
+ 		 $('#message').text(""); 
+ 		$('#itemPrice').text(""); 
+ 		insertedCoinsTotal = 0.00;
+		$('#htmlApp').slideUp();
+		$('#htmlApp').slideDown();
+
+
+	}
+
+
 	function getCoinInfo()
 	{
 		$http.get("api/coinDetails.php").then(function (responseCoins) {$scope.Coindetails = responseCoins.data;});
@@ -75,7 +94,7 @@ VendingMachine.controller("DbController",['$scope','$http', function($scope,$htt
     $scope.deleteInfo = function(info) {
         $http.post('api/deleteDetails.php', {
             "del_id": info.product_id
-        }).success(function(response) {
+        }).then(function(response) {
             if (response.data == true) {
                 getInfo();
             }
@@ -104,7 +123,37 @@ VendingMachine.controller("DbController",['$scope','$http', function($scope,$htt
 		$('#itemTxt').text(""+info.product_name + " Selected ");
 		$('#itemPrice').text("R"+info.product_price);
 		$scope.prodPrice = info.product_price;
+		$scope.selectedProdid = info.product_id;
 		calc($scope.prodPrice);
+		
+
+    }
+    
+    
+    
+        $scope.purchase = function(info) 
+    {
+		console.log("Purchased item no:"+ info);
+
+		$http.post('api/productPurchase.php', {
+            "purchase_id": info
+        }).then(function(response) {
+            if (response.data == true) {
+                getInfo();
+                
+                var newTot=$scope.coinTot - $scope.prodPrice;
+                $scope.coinTot = newTot;
+                insertedCoinsTotal = newTot;
+                calc($scope.prodPrice);
+                $('#itemTxt').text("Choose an Item"); 
+                $('#itemPrice').text(""); 
+ 		 		$('#message').text(""); 
+				
+                $scope.selectedProdid=0;
+
+            }
+        });
+		
 
     }
 
@@ -113,42 +162,46 @@ VendingMachine.controller("DbController",['$scope','$http', function($scope,$htt
 		
 		var insertedCoins = $scope.coinTot;
 		
-		if(productPrice>insertedCoins) // Not Enough Money
+		if($scope.selectedProdid!=0)
 		{
-			$('#message').text("Please insert R"+ (productPrice-insertedCoins)+ " more");
-			
-			$('#purchaseBtn').addClass('btn-danger');
-			$('#purchaseBtn').prop('disabled', true);
-			
-		}
-		else if(productPrice<insertedCoins) //Excess Money
-		{
-			$('#message').text("R"+ (insertedCoins-productPrice)+ " change due");
-			
-			$('#purchaseBtn').removeClass('btn-danger');
-			$('#purchaseBtn').addClass('btn-success');
-			$('#purchaseBtn').prop('disabled', false);
-		}
-		else if (productPrice=insertedCoins) //Exact amount given
-		{
-		$('#message').text("exact amount given");
 		
-			$('#purchaseBtn').removeClass('btn-danger');
-			$('#purchaseBtn').addClass('btn-success');
-			$('#purchaseBtn').prop('disabled', false);
+				if(productPrice>insertedCoins) // Not Enough Money
+				{
+					$('#message').text("Please insert R"+ (productPrice-insertedCoins)+ " more");
 			
-		}
+					$('#purchaseBtn').addClass('btn-danger');
+					$('#purchaseBtn').prop('disabled', true);
+			
+				}
+				else if(productPrice<insertedCoins) //Excess Money
+				{
+					$('#message').text("R"+ (insertedCoins-productPrice)+ " change due");
+			
+					$('#purchaseBtn').removeClass('btn-danger');
+					$('#purchaseBtn').addClass('btn-success');
+					$('#purchaseBtn').prop('disabled', false);
+				}
+				else if (productPrice=insertedCoins) //Exact amount given
+				{
+				$('#message').text("Exact amount given");
 		
-		if ($scope.prodPrice ==0)
-		{
-				$('#message').text("");
-				$('#purchaseBtn').prop('disabled', true);
-				$('#purchaseBtn').removeClass('btn-success');
+					$('#purchaseBtn').removeClass('btn-danger');
+					$('#purchaseBtn').addClass('btn-success');
+					$('#purchaseBtn').prop('disabled', false);
+			
+				}
+		
+				if ($scope.prodPrice ==0)
+				{
+						$('#message').text("");
+						$('#purchaseBtn').prop('disabled', true);
+						$('#purchaseBtn').removeClass('btn-success');
 
 
 
-		}
+				}
 		
+		}
 		
 		
 	}
