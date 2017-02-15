@@ -16,7 +16,7 @@
    </head>
    <body >
       <div class="container wrapper" ng-controller="DbController">
-   <h1 class="text-center">Vending Machine &nbsp    <button ng-click="refreshAll()" class="btn btn-sm btn-default">Refresh</button>
+   <h1 class="text-center">Vending Machine &nbsp    <button ng-click="refreshAll()" class="btn btn-sm btn-default">Refresh</button>&nbsp<a href="products.php" class="btn btn-sm btn-default">Products Management</a>
  </h1>
    <hr/>
      <h2 class="text-center">Insert Coins</h1>
@@ -32,7 +32,7 @@
 
    <h4 class="text-center"><span id="currency-custom">{{coinTot | currency:"R"}} inserted</span></h4>
 
-<table class="table table-bordered" width="100%" border="1">
+<table id="monitor" class="table table-bordered" width="100%" border="1">
   <tr>
     <td>   <h1 id="itemTxt" class="text-center">Choose an Item</h1> </td>
     <td><button disabled id = "purchaseBtn" ng-click="purchase(selectedProdid)" class="btn btn-lg btn-group btn-block">Purchase</button></td>
@@ -49,7 +49,7 @@
           
             <div id="htmlApp" class = "columns">
                   <div ng-repeat="detail in details">
-                   <button animate-change="detail.product_qty" change-class="flash" ng-disabled="detail.product_qty<1" ng-click="clickProd(detail)" class="btn btn-lg btn-info" style="width:100%;margin-bottom:4px;white-space: normal;text-align:center"> <h4 class="hidden">{{detail.product_id}}</h4>  <h3>{{detail.product_name}}</h3> <h3 class="text-success">R{{detail.product_price}}</h3><h3 class="text-success">{{detail.product_qty}} remaining</h3></button>
+                   <button ng-disabled="detail.product_qty<1" ng-click="clickProd(detail)" class="btn btn-lg btn-info" style="width:100%;height:50%;margin-bottom:4px;white-space: normal;text-align:center"> <h4 class="hidden">{{detail.product_id}}</h4>  <h3>{{detail.product_name}}</h3> <h3 class="text-success">R{{detail.product_price}}</h3><h3 class="text-success">{{detail.product_qty}} remaining</h3></button>
                   </div>
                  </div>
 

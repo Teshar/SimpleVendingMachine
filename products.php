@@ -15,7 +15,7 @@
    </head>
    <body>
       <div class="container wrapper" ng-controller="DbController">
-         <h1 class="text-center">Products</h1>
+         <h1 class="text-center"><a href="index.html" class="btn btn-sm btn-default">Home</a> &nbsp Products</h1>
          <nav class="navbar navbar-default">
             <div class="navbar-header">
                <div class="alert alert-default navbar-brand search-box">

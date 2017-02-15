@@ -29,6 +29,8 @@ VendingMachine.controller("DbController",['$scope','$http', function($scope,$htt
 		$('#htmlApp').slideDown();
 
 
+
+
 	}
 
 
